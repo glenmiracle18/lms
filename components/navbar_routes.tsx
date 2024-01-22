@@ -8,7 +8,6 @@ import  Link  from 'next/link'
 
 const NavbarRoutes = () => {
     const pathname = usePathname();
-    const router = useRouter();
 
     // verification for teacher / player (course) mode
     const isTeacherPage = pathname?.startsWith('/teacher')
@@ -19,15 +18,17 @@ const NavbarRoutes = () => {
             {
                 isTeacherPage || isPlayerPage ?
                 (
-                    <Button>
-                        <LogOut className='h-4 w-4 mr-2' />
-                        Exit
-                    </Button>
+                    <Link href="/">
+                        <Button size='sm' variant='outline'>
+                            <LogOut className='h-4 w-4 mr-2' />
+                            Exit
+                        </Button>
+                    </Link>
                 )
                 :
                 (
                     <Link href="/teacher/courses">
-                        <Button>
+                        <Button size='sm' variant='outline'>
                             Teacher Mode
                         </Button>
                     </Link>
