@@ -3,7 +3,7 @@ import React from 'react'
 
 const Dashboard = () => {
     return (
-        <UserButton afterSignOutUrl='/'/>
+        <div></div>
     )
 }
 

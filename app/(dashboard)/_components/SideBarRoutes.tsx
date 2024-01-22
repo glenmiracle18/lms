@@ -1,6 +1,7 @@
+"use client"
 import React from 'react'
 import SideBarItem from './SideBarItem';
-import { Layout, Compass } from 'lucide-react';
+import { Layout, Compass, Medal, Users, Flame } from 'lucide-react';
 
 const guestRoutes = [
     {
@@ -12,6 +13,21 @@ const guestRoutes = [
         icon: Compass,
         label: "Browse",
         href: "/search",
+    },
+    {
+        icon: Medal,
+        label: "Leaderboard",
+        href: "/leaderboard",
+    },
+    {
+        icon: Users,
+        label: "Communities",
+        href: "/communities"
+    },
+    {
+        icon: Flame,
+        label: "Mentorship",
+        href: "/mentorship",
     }
 ]
 
