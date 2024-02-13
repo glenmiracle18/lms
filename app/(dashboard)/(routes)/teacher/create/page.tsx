@@ -18,6 +18,7 @@ import {
   FormMessage,
   FormItem,
 } from "@/components/ui/form";
+import toast from "react-hot-toast";
 
 // you can find all this form complexity in the shadcn library online
 // https://ui.shadcn.com/docs/components/form
@@ -41,10 +42,16 @@ const Create = () => {
 
   // verifying the state is the form is still submitiing or has alreader submited
   const { isSubmitting, isValid } = form.formState;
+  const router = useRouter();
 
   // onsubmint functionalities
-  const onSubmint = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmint = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("/api/courses", values);
+      router.push(`/teacher/couses/${response.data.id}`)
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -76,7 +83,7 @@ const Create = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    What would you like to name this course?
+                    What will you teack in this course?
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
