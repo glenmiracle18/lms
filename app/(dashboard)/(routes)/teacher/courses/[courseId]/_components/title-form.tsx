@@ -38,6 +38,7 @@ const TitleForm = ({
     initialData,
     courseId,
 }: TitleFormProps) => {
+    // state for editing mode
     const [isEditing, setIsEditing] = useState(false);
     const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -79,9 +80,9 @@ const TitleForm = ({
                 </Button>
             </div>
             {!isEditing && (
-                <div className="mt-2 text-sm">
+                <p className="text-sm mt-2">
                     {initialData.title}
-                </div>
+                </p>
             )}
 
             {isEditing && (
@@ -93,7 +94,7 @@ const TitleForm = ({
                         <FormField
                             control={form.control}
                             name="title"
-                            render={(field) => (
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input
