@@ -19,27 +19,27 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import { Course } from "@prisma/client";
+import { Combobox } from "@/components/ui/combobox";
 
 // interface props
-interface DescriptionFormProps {
-    initialData: {
-        description: string | null;
-    };
+interface CategoriesFormProps {
+    initialData: Course;
     courseId: string;
+    options: { label: string; value: string }[]
 }
 
 // form schema
 const formSchema = z.object({
-    description: z.string().min(1, {
-        message: "Title is required",
-    }),
+    categoryId: z.string().min(1),
 });
 
 // functional component
-const DescriptionForm = ({
+const CategoryForm = ({
     initialData,
     courseId,
-}: DescriptionFormProps) => {
+    options
+}: CategoriesFormProps) => {
     // state for editing mode
     const [isEditing, setIsEditing] = useState(false);
     const toggleEdit = () => setIsEditing((current) => !current);
@@ -47,7 +47,9 @@ const DescriptionForm = ({
     // form hook
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData as { description?: string | undefined },
+        defaultValues: {
+            categoryId: initialData?.categoryId || ""
+        },
     });
 
     // form state
@@ -66,17 +68,20 @@ const DescriptionForm = ({
         }
     }
 
+    // find the selected option
+    const selectedOption = options.find((option) => option.value === initialData.categoryId);
+
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
             <div className="font-medium flex items-center justify-between">
-                Create a Description
+                Create a Category
                 <Button variant="ghost" onClick={toggleEdit}>
                     {isEditing ? (
                         <>Cancel</>
                     ): (
                         <>
                             <Pencil className="h-4 w-4 mr-2" />
-                            Edit Description
+                            Edit Category
                         </>
                     )}
                 </Button>
@@ -84,9 +89,9 @@ const DescriptionForm = ({
             {!isEditing && (
                 <p className={cn(
                     "test-sm mt-2",
-                    !initialData.description && "text-slate-500 italic"
+                    !initialData.categoryId && "text-slate-500 italic"
                 )}>
-                    {initialData.description || "No description"}
+                    {selectedOption?.label || "No category"}
                 </p>
             )}
 
@@ -98,14 +103,13 @@ const DescriptionForm = ({
                     >
                         <FormField
                             control={form.control}
-                            name="description"
+                            name="categoryId"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Textarea
+                                        <Combobox 
+                                            options={...options}
                                             {...field}
-                                            placeholder="e.g This course is about..."
-                                            disabled={isSubmitting}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -124,4 +128,4 @@ const DescriptionForm = ({
     )
 }
 
-export default DescriptionForm
+export default CategoryForm

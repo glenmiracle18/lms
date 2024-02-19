@@ -7,6 +7,7 @@ import { IconBadge } from '@/components/icon-badge'
 import TitleForm from './_components/title-form'
 import DescriptionForm from './_components/description-form'
 import ImageForm from './_components/image-form'
+import CategoryForm from './_components/catergory-form'
 
 const CourseIdPage = async ({
     params
@@ -33,7 +34,9 @@ const CourseIdPage = async ({
         orderBy: {
             name: "asc"
         },
-    })
+    });
+
+    console.log(categories)
 
     // redirect the root page if the course is not found
     if (!course) {
@@ -95,6 +98,10 @@ const CourseIdPage = async ({
                     <CategoryForm
                         initialData={course}
                         courseId={course.id}
+                        options={categories.map((category) => ({
+                            label: category.name,
+                            value: category.id,
+                        }))}
                     />
                 </div>
             </div>
