@@ -64,10 +64,13 @@ const ImageForm = ({
             toast.success("Course updated")
             toggleEdit();
             router.refresh();
-        } catch {
+            
+        } catch(error) {
+            console.log(error)
             toast.error("Something went wrong");
         }
     }
+
 
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4 ">

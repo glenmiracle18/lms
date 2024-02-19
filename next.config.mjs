@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["*"] // Allow all domains
+        domains: ["utfs.io"] // Allow all domains
     }
 };
 
