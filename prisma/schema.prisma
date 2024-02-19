@@ -33,7 +33,7 @@ model Course {
 
 model Category {
   id      String   @id @default(uuid())
-  name    String   @db.Text
+  name    String   @db.Text @unique
   courses Course[]
 
   createdAt DateTime @default(now())
@@ -42,7 +42,7 @@ model Category {
 
 model Attachment {
   id       String @id @default(uuid())
-  name     String
+  name     String 
   url      String @db.Text
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

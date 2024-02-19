@@ -1,5 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
+
+// utility for creating http response
 import { NextResponse  } from "next/server";
 
 // PATCH method
@@ -7,6 +9,7 @@ export async function PATCH(
     req: Request,
     { params }: { params: { courseId: string } } // destructuring the params object
     ){
+        
     try {
         const { userId } = auth();
         const { courseId } = params;

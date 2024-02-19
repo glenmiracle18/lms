@@ -11,13 +11,13 @@ import ImageForm from './_components/image-form'
 const CourseIdPage = async ({
     params
 }: {
-    params: {courseId: string}
+    params: { courseId: string }
 }) => {
 
     const { userId } = auth()
 
     // redirect the user to the root page if they are not authenticated
-    if(!userId){
+    if (!userId) {
         redirect("/")
     }
 
@@ -26,6 +26,13 @@ const CourseIdPage = async ({
         where: {
             id: params.courseId
         }
+    })
+
+    // fetch the categories
+    const categories = await db.category.findMany({
+        orderBy: {
+            name: "asc"
+        },
     })
 
     // redirect the root page if the course is not found
@@ -84,10 +91,15 @@ const CourseIdPage = async ({
                         initialData={course}
                         courseId={course.id}
                     />
+
+                    <CategoryForm
+                        initialData={course}
+                        courseId={course.id}
+                    />
                 </div>
             </div>
         </div>
     )
-    }
+}
 
 export default CourseIdPage
