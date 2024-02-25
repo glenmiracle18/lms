@@ -85,7 +85,7 @@ const Create = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    What will you teack in this course?
+                    What will you teach in this course?
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
