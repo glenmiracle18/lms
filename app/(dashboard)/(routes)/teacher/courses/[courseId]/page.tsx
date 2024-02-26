@@ -10,6 +10,7 @@ import ImageForm from './_components/image-form'
 import CategoryForm from './_components/catergory-form'
 import PriceForm from './_components/price-form'
 import AttachmentForm from './_components/attachment-form'
+import ChaptersForm from './_components/chapters-form'
 
 const CourseIdPage = async ({
     params
@@ -27,9 +28,15 @@ const CourseIdPage = async ({
     // fetch the course from the database
     const course = await db.course.findUnique({
         where: {
-            id: params.courseId
+            id: params.courseId,
+            userId
         },
-        include: { //extending the course attachments
+        include: { //extending the course attachments and chapters
+            chapters: {
+                orderBy: {
+                    position: "asc"
+                },
+            },
             attachments: {
                 orderBy: {
                     createdAt: "desc"
@@ -57,7 +64,8 @@ const CourseIdPage = async ({
         course.description,
         course.imageUrl,
         course.price,
-        course.categoryId
+        course.categoryId,
+        course.chapters.some(chapter => chapter.isPublished),
     ]
 
     // calculate the number of fields left to complete
@@ -122,7 +130,10 @@ const CourseIdPage = async ({
                             </h2>
                         </div>
                         <div>
-                            TODO: Add chapters
+                            <ChaptersForm
+                                initialData={course}
+                                courseId={course.id}
+                            />
                         </div>
                     </div>
 

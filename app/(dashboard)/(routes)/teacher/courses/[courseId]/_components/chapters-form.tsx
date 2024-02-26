@@ -14,39 +14,38 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Pencil, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { Course } from "@prisma/client";
+import { Course, Chapter } from "@prisma/client";
 
 // interface props
-interface DescriptionFormProps {
-    initialData: Course;
+interface ChaptersFormProps {
+    initialData: Course & { chapters: Chapter[] };
     courseId: string;
 }
 
 // form schema
 const formSchema = z.object({
-    description: z.string().min(1, {
-        message: "Title is required",
-    }),
+    title: z.string().min(1),
 });
 
 // functional component
-const DescriptionForm = ({
+const ChaptersForm = ({
     initialData,
     courseId,
-}: DescriptionFormProps) => {
+}: ChaptersFormProps) => {
     // state for editing mode
-    const [isEditing, setIsEditing] = useState(false);
-    const toggleEdit = () => setIsEditing((current) => !current);
+    const [isCreating, setIsCreating] = useState(false);
+    const toggleCreating = () => setIsCreating((current) => !current);
 
     // form hook
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData as { description?: string | undefined },
+        defaultValues: {
+            title: "",
+        },
     });
 
     // form state
@@ -56,9 +55,9 @@ const DescriptionForm = ({
     // form methods
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            await axios.patch(`/api/courses/${courseId}`, values);
-            toast.success("Course updated")
-            toggleEdit();
+            await axios.post(`/api/courses/${courseId}/chapters`, values);
+            toast.success("Chapter created")
+            toggleCreating();
             router.refresh();
         } catch {
             toast.error("Something went wrong");
@@ -68,28 +67,20 @@ const DescriptionForm = ({
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
             <div className="font-medium flex items-center justify-between">
-                Create a Description
-                <Button variant="ghost" onClick={toggleEdit}>
-                    {isEditing ? (
+                Create a chapter
+                <Button variant="ghost" onClick={toggleCreating}>
+                    {isCreating ? (
                         <>Cancel</>
                     ): (
                         <>
-                            <Pencil className="h-4 w-4 mr-2" />
-                            Edit Description
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Edit chapters
                         </>
                     )}
                 </Button>
             </div>
-            {!isEditing && (
-                <p className={cn(
-                    "test-sm mt-2",
-                    !initialData.description && "text-slate-500 italic"
-                )}>
-                    {initialData.description || "No description"}
-                </p>
-            )}
-
-            {isEditing && (
+            
+            {isCreating && (
                 <Form {...form}>
                     <form
                         className="space-y-4 mt-4"
@@ -97,13 +88,13 @@ const DescriptionForm = ({
                     >
                         <FormField
                             control={form.control}
-                            name="description"
+                            name="title"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Textarea
+                                        <Input
                                             {...field}
-                                            placeholder="e.g This course is about..."
+                                            placeholder="e.g Introdcution to your course.."
                                             disabled={isSubmitting}
                                         />
                                     </FormControl>
@@ -111,16 +102,28 @@ const DescriptionForm = ({
                                 </FormItem>
                             )}
                         />
-                        <div className="flex items-center gap-x-2">
                             <Button type="submit" disabled={!isValid || isSubmitting}>
-                                Save
+                                Create
                             </Button>
-                        </div>
                     </form>
                 </Form>
+            )}
+            {!isCreating && (
+                <div className={cn("text-sm mt-2",
+                    !initialData.chapters.length && "text-slate-500 italic"
+                )}>
+                    {!initialData.chapters.length && "No Chapters!"}
+
+                    {/* TODO: Add a list of chapters */}
+                </div>
+            )}
+            {!isCreating && (
+                <p className="text-xs text-muted-foreground mt-4">
+                    Drag and move to reorder the chapters
+                </p>
             )}
         </div>
     )
 }
 
-export default DescriptionForm
+export default ChaptersForm
