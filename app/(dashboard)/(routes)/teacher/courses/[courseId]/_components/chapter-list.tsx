@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 // hello-pangea is a fork of the react beatiful dnd (drag and drop) library
 //  it was created to fix some issues with the original library, since it was 
-// not being maintained. You can find more information about this project here:
+// not being maintained(discontinued). You can find more information about this project here:
 // https://github.com/atlassian/react-beautiful-dnd/issues/2138
 import {
     DragDropContext,

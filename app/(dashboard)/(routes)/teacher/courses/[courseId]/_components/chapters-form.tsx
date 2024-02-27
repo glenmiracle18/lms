@@ -66,6 +66,7 @@ const ChaptersForm = ({
         }
     }
 
+    // handles chapter reordering
     const onReorder = async (updateData: { id: string; position: number }[]) => {
         try {
             setIsUpdating(true)

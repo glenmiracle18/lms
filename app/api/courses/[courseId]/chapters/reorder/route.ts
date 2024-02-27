@@ -39,7 +39,7 @@ export async function PUT(
         return NextResponse.json("Succes", { status: 200 })
 
     } catch (error) {
-        console.log("COURSE_ID_CHAPTER: ", error)
+        console.log("CHAPTER_REORDER: ", error)
         return new NextResponse("Internal Server Error", { status: 500 })
     }
 }
