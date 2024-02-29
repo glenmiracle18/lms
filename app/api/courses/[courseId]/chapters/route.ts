@@ -26,7 +26,7 @@ export async function POST(
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        // fetching the laterst chapter created
+        // fetching the latest chapter created
         const lastChapter = await db.chapter.findFirst({
             where: {
                 courseId: params.courseId
