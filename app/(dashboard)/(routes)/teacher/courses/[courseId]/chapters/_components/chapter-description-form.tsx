@@ -87,6 +87,7 @@ const ChapterDescriptionForm = ({
                     "test-sm mt-2",
                     !initialData.description && "text-slate-500 italic"
                 )}>
+                    {/* in case the initial data actually exists */}
                     {!initialData.description && "No description"}
                     {initialData.description && (
                         <Preview value={initialData.description} />
