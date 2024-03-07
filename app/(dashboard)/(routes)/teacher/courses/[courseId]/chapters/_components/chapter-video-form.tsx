@@ -4,27 +4,18 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
+import { Pencil, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { FileUpload } from "@/components/file-upload";
-import { Chapter } from "@prisma/client";
+import { Chapter, MuxData } from "@prisma/client";
 import { VideoIcon } from "@radix-ui/react-icons";
+import MuxPlayer from "@mux/mux-player-react";
 
 // interface props
 interface ChapterVideoFormProps {
-  initialData: Chapter & { muxData?: muxData | null };
+  initialData: Chapter & { muxData?: MuxData | null };
   courseId: string;
   chapterId: string;
 }
@@ -100,7 +91,10 @@ const ChapterVideoForm = ({
             <VideoIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div>Video Uploaded</div>
+          // fetch and display video from uploadthing
+          <div className="relative aspect-video mt-2">
+            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ""} />
+          </div>
         ))}
 
       {isEditing && (
