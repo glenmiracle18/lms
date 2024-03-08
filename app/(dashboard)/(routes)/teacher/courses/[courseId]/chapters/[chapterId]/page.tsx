@@ -9,6 +9,8 @@ import ChapterTitleForm from "../_components/chapter-title-form";
 import ChapterDescriptionForm from "../_components/chapter-description-form";
 import ChapterAccessForm from "../_components/chapter-access-form";
 import ChapterVideoForm from "../_components/chapter-video-form";
+import { Banner } from "@/app/(dashboard)/_components/banner";
+import { ChapterActions } from "../_components/chapter-actions";
 
 const ChapterIdPage = async ({
   params,
@@ -46,72 +48,88 @@ const ChapterIdPage = async ({
 
   const completionText = `${completedFields}/${totalFields}`;
 
+  const isComplete = requiredFields.every(Boolean);
+
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between">
-        <div className="w-full">
-          <Link
-            href={`/teacher/courses/${params.courseId}`}
-            className="mb-6 flex items-center text-sm transition hover:opacity-75"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to course setup
-          </Link>
-          <div className="flex w-full items-center justify-between">
-            <div className="flex flex-col gap-y-2">
-              <h1 className="font-meduim text-2xl">Chapter Creation</h1>
-              <span className="text-sm text-slate-700">
-                Complete all fields ({completionText}) before saving the
-                chapter.
-              </span>
+    <>
+      {!chapter.isPublished && (
+        <Banner
+          variant="warning"
+          label="This chapter is unpublished. It will not be visible in the course page"
+        />
+      )}
+      <div className="p-6">
+        <div className="flex items-center justify-between">
+          <div className="w-full">
+            <Link
+              href={`/teacher/courses/${params.courseId}`}
+              className="mb-6 flex items-center text-sm transition hover:opacity-75"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to course setup
+            </Link>
+            <div className="flex w-full items-center justify-between">
+              <div className="flex flex-col gap-y-2">
+                <h1 className="font-meduim text-2xl">Chapter Creation</h1>
+                <span className="text-sm text-slate-700">
+                  Complete all fields ({completionText}) before saving the
+                  chapter.
+                </span>
+              </div>
+              <ChapterActions
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+                isPublished={chapter.isPublished}
+                disabled={!isComplete}
+              />
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="space-y-4">
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="space-y-4">
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LayoutDashboard} />
+                <h2 className="text-xl">Customize your chapter details</h2>
+              </div>
+              {/* chapter title form */}
+              <ChapterTitleForm
+                initialData={chapter}
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+              />
+              <ChapterDescriptionForm
+                initialData={chapter}
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+              />
+            </div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Eye} />
+              <h2 className="text-xl">Access settings</h2>
+            </div>
+            {/* access form */}
+            <ChapterAccessForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your chapter details</h2>
+              <IconBadge icon={Video} />
+              <h1 className="text-xl">Upload a Video </h1>
             </div>
-            {/* chapter title form */}
-            <ChapterTitleForm
-              initialData={chapter}
-              courseId={params.courseId}
-              chapterId={params.chapterId}
-            />
-            <ChapterDescriptionForm
+            <ChapterVideoForm
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
             />
           </div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={Eye} />
-            <h2 className="text-xl">Access settings</h2>
-          </div>
-          {/* access form */}
-          <ChapterAccessForm
-            initialData={chapter}
-            courseId={params.courseId}
-            chapterId={params.chapterId}
-          />
-        </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={Video} />
-            <h1 className="text-xl">Upload a Video </h1>
-          </div>
-          <ChapterVideoForm
-            initialData={chapter}
-            courseId={params.courseId}
-            chapterId={params.chapterId}
-          />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

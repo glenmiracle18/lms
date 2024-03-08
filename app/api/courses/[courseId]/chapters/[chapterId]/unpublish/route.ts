@@ -28,7 +28,6 @@ export async function PATCH(
     }
 
     // actual course publication
-
     // find the chapter
     const chapter = await db.chapter.findUnique({
       where: {
@@ -62,7 +61,7 @@ export async function PATCH(
         courseId: params.courseId,
       },
       data: {
-        isPublished: true,
+        isPublished: false,
       },
     });
 
