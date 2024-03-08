@@ -6,37 +6,34 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
-interface ChapterActionsProps {
+interface CourseActionsProps {
   isPublished: boolean;
-  chapterId: string;
   courseId: string;
   disabled: boolean;
 }
 
-export const ChapterActions = ({
+export const CourseActions = ({
   isPublished,
-  chapterId,
   courseId,
   disabled,
-}: ChapterActionsProps) => {
+}: CourseActionsProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const confetti = useConfettiStore();
 
   const onClick = async () => {
     try {
       setIsLoading(true);
       if (!isPublished) {
-        await axios.patch(
-          `/api/courses/${courseId}/chapters/${chapterId}/publish`,
-        );
-        toast.success("Chapter Published");
+        await axios.patch(`/api/courses/${courseId}/publish`);
+        toast.success("Course Published");
+        confetti.onOpen();
         router.refresh();
       } else {
-        await axios.patch(
-          `/api/courses/${courseId}/chapters/${chapterId}/unpublish`,
-        );
-        toast.success("Chapter Unpublished");
+        await axios.patch(`/api/courses/${courseId}/unpublish`);
+        toast.success("Course Unpublished");
         router.refresh();
       }
     } catch (err) {
@@ -49,12 +46,10 @@ export const ChapterActions = ({
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(
-        `/api/courses/${courseId}/chapters/${chapterId}/delete`,
-      );
-      toast.success("Chapter deleted");
+      await axios.delete(`/api/courses/${courseId}/delete`);
+      toast.success("Course deleted");
       router.refresh();
-      router.push(`/teacher/courses/${courseId}`);
+      router.push(`/teacher/courses`);
     } catch {
       toast.error("Something went wrong");
     } finally {

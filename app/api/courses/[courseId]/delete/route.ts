@@ -14,7 +14,7 @@ export async function DELETE(
 ) {
   try {
     // desructured courseId and chapterId from params (easy)
-    const { courseId, chapterId } = params;
+    const { courseId } = params;
     const { userId } = auth();
 
     if (!userId) {
@@ -32,61 +32,37 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // find the chapter
-    const chapter = await db.chapter.findUnique({
+    const course = await db.course.findUnique({
       where: {
-        id: params.chapterId,
-        courseId: params.courseId,
+        id: params.courseId,
+        userId: userId,
+      },
+      include: {
+        chapters: {
+          include: {
+            muxData: true,
+          },
+        },
       },
     });
 
-    if (!chapter) {
+    if (!course) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    if (chapter.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterId: params.chapterId,
-        },
-      });
-
-      // if the mux data and video asset exists, delete the video asset
-      if (existingMuxData) {
-        await mux.video.assets.delete(existingMuxData.assetId);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
+    // delete the mux data of the videos of each chapter
+    for (const chapter of course.chapters) {
+      if (chapter.muxData?.assetId) {
+        await mux.video.assets.delete(chapter.muxData.assetId);
       }
     }
 
-    const deleteChapter = await db.chapter.delete({
+    const deleteCourse = await db.course.delete({
       where: {
-        id: chapterId,
+        id: courseId,
       },
     });
 
-    const publishedChaptersInCourse = await db.chapter.findMany({
-      where: {
-        courseId,
-        isPublished: true,
-      },
-    });
-
-    if (!publishedChaptersInCourse.length) {
-      await db.course.update({
-        where: {
-          id: courseId,
-        },
-        data: {
-          isPublished: false,
-        },
-      });
-    }
-
-    return NextResponse.json(deleteChapter);
+    return NextResponse.json(deleteCourse);
   } catch (error) {
     console.log("CHAPTER_DELETE", error);
     return new NextResponse("Internal Server Error", { status: 500 });
