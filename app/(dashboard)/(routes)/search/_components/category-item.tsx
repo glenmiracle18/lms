@@ -23,6 +23,7 @@ export const CategoryItem = ({
 
   // getting the currentId and the title from the url parameter after pushing to determinethe isSelected state.
   const currentCategoryId = searchParams.get("categoryId");
+  const currentTitle = searchParams.get("title");
 
   // the selection state is based on if currentCategoryId is equal to the value (item.id) => item is the category
   const isSelected = currentCategoryId === value;
@@ -32,6 +33,7 @@ export const CategoryItem = ({
       {
         url: pathname,
         query: {
+          title: currentTitle,
           categoryId: isSelected ? null : value,
         },
       },
