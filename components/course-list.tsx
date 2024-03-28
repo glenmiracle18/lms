@@ -7,6 +7,7 @@ interface CoursesListProps {
   items: CourseWithProgressWithCategory[];
 }
 
+// combining the cousrse with the progress and the category
 type CourseWithProgressWithCategory = Course & {
   category: Category | null;
   chapters: { id: string }[];

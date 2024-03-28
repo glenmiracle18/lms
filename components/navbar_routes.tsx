@@ -11,7 +11,7 @@ const NavbarRoutes = () => {
 
   // verification for teacher (course) mode
   const isTeacherPage = pathname?.startsWith("/teacher");
-  const isPlayerPage = pathname?.includes("/chapter");
+  const isCoursePage = pathname?.includes("/courses");
   const isSearchPage = pathname === "/search";
 
   return (
@@ -22,7 +22,7 @@ const NavbarRoutes = () => {
         </div>
       )}
       <div className="ml-auto flex gap-2">
-        {isTeacherPage || isPlayerPage ? (
+        {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button size="sm" variant="outline">
               <LogOut className="mr-2 h-4 w-4" />

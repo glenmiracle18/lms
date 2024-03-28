@@ -26,7 +26,9 @@ export const getCourses = async ({
       where: {
         isPublished: true,
         title: {
-          contains: title,
+          // replacing contains with search since we added fulltextsearch in our prisma schema
+          // contains: title,
+          search: title,
         },
         categoryId,
       },
