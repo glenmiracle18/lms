@@ -39,9 +39,15 @@ export const CourseSidebar = async ({
     <div className="flex h-full flex-col overflow-y-auto border-r shadow-sm">
       <div className="flex flex-col border-b p-8">
         <h1 className="font-semibold">{course.title}</h1>
-        <div className="mt-4">
-          <CourseProgress value={progress} variant="success" />
-        </div>
+        {/* provide progress bar only when the course is paid */}
+        {purchase && (
+          <div className="mt-6">
+            <CourseProgress
+              value={progress}
+              variant={progress === 100 ? "success" : "default"}
+            />
+          </div>
+        )}
         {/* check purchase and add progress */}
       </div>
       <div className="flex w-full flex-col">
