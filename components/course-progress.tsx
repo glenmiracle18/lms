@@ -24,7 +24,7 @@ export const CourseProgress = ({
 }: CourseProgressProps) => {
   return (
     <div>
-      <Progress className="h-2" value={value} variant={variant} />
+      <Progress className="h-2" value={value} />
       <p
         className={cn(
           "mt-2 font-medium text-sky-700",

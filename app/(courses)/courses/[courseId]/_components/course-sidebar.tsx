@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { CourseSidebarItem } from "./course-sidebar-item";
+import { CourseProgress } from "@/components/course-progress";
+import { getProgress } from "@/actions/get-progress";
 interface CourseSidebarProps {
   course: Course & {
     chapters: Chapter & {
@@ -22,6 +24,9 @@ export const CourseSidebar = async ({
     return redirect("/");
   }
 
+  // fetch the user progress
+  const progress = await getProgress(userId, course.id);
+
   const purchase = await db.purchase.findUnique({
     where: {
       userId_courseId: {
@@ -34,6 +39,9 @@ export const CourseSidebar = async ({
     <div className="flex h-full flex-col overflow-y-auto border-r shadow-sm">
       <div className="flex flex-col border-b p-8">
         <h1 className="font-semibold">{course.title}</h1>
+        <div className="mt-4">
+          <CourseProgress value={progress} variant="success" />
+        </div>
         {/* check purchase and add progress */}
       </div>
       <div className="flex w-full flex-col">
