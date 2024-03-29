@@ -48,7 +48,7 @@ const ChapterIdPage = async ({
           label="You need to purchase this course to watch this chapter."
         />
       )}
-      <div className="mx-auto flex max-w-4xl flex-col pb-20">
+      <div className="mx-auto flex flex-col pb-20">
         <div className="p-4">
           <VideoPlayer
             chapterId={params.chapterId}

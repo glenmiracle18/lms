@@ -1,12 +1,14 @@
-import NavbarRoutes from "@/components/navbar_routes";
 import { Chapter, Course, UserProgress } from "@prisma/client";
+
+import NavbarRoutes from "@/components/navbar_routes";
+
 import CourseMobileSideBar from "./course-mobile-sdiebar";
 
 interface CourseNavbarProps {
   course: Course & {
-    chapters: Chapter & {
+    chapters: (Chapter & {
       userProgress: UserProgress[] | null;
-    };
+    })[];
   };
   progressCount: number;
 }
