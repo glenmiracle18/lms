@@ -1,18 +1,19 @@
-import React from 'react'
-import { Logo } from './logo'
-import SideBarRoutes from './SideBarRoutes'
+import React from "react";
+import { Logo } from "./logo";
+import SideBarRoutes from "./SideBarRoutes";
 
 const Sidebar = () => {
-    return (
-        <div className='h-full border-r shadow-sm bg-white flex flex-col overflow-y-auto'>
-            <div className='p-6'>
-                <Logo />
-            </div>
-            <div className='flex flex-col w-full'>
-                <SideBarRoutes />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm">
+      <div className="flex items-center gap-2 p-6">
+        <Logo />
+        <h1 className="text-xl font-bold text-blue-500">UNITECH</h1>
+      </div>
+      <div className="flex w-full flex-col">
+        <SideBarRoutes />
+      </div>
+    </div>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
