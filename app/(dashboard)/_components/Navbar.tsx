@@ -1,15 +1,12 @@
-import React from 'react'
-import MobileSideBar from './MobileSidebar'
-import NavbarRoutes from '@/components/navbar_routes'
+import { NavbarRoutes } from "@/components/navbar_routes";
 
+import MobileSidebar from "./MobileSidebar";
 
-const Navbar = () => {
-    return (
-        <div className='flex items-center border-b shadow-sm p-4 h-full bg-white'>
-            <MobileSideBar />
-            <NavbarRoutes />
-        </div>
-    )
-}
-
-export default Navbar
+export const Navbar = () => {
+  return (
+    <div className="flex h-full items-center border-b bg-white p-4 shadow-sm">
+      <MobileSidebar />
+      <NavbarRoutes />
+    </div>
+  );
+};
