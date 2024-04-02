@@ -15,7 +15,7 @@ const ComingSoon = () => {
           // CalSans.className,
         )}
       >
-        LeaderBoard
+        Mentorship
       </h1>
       <p className="relative z-20 mt-2 text-center text-neutral-300">
         Stary tuned. Our developers are working on this feature!
