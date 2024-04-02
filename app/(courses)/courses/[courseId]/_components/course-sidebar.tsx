@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { CourseSidebarItem } from "./course-sidebar-item";
 import { CourseProgress } from "@/components/course-progress";
 import { getProgress } from "@/actions/get-progress";
+
 interface CourseSidebarProps {
   course: Course & {
     chapters: Chapter & {

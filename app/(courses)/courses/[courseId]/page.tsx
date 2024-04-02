@@ -22,6 +22,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     return redirect("/");
   }
 
+  // redirects to the first chapter of the course
   return redirect(`/courses/${course.id}/chapters/${course.chapters[0].id}`);
 };
 

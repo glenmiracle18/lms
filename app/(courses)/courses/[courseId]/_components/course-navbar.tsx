@@ -7,7 +7,7 @@ import CourseMobileSideBar from "./course-mobile-sdiebar";
 interface CourseNavbarProps {
   course: Course & {
     chapters: (Chapter & {
-      userProgress: UserProgress[] | null;
+      userProgress: UserProgress[] | null; // Make userProgress optional
     })[];
   };
   progressCount: number;
@@ -16,7 +16,7 @@ interface CourseNavbarProps {
 export const CourseNavbar = ({ course, progressCount }: CourseNavbarProps) => {
   return (
     <div className="flex h-full items-center border-b bg-white p-4 shadow-sm">
-      <CourseMobileSideBar course={course} progressCount={progressCount} />
+      <CourseMobileSideBar progressCount={progressCount} course={course} />
       <NavbarRoutes />
     </div>
   );
