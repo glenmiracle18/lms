@@ -6,11 +6,10 @@ import { CourseSidebarItem } from "./course-sidebar-item";
 import { CourseProgress } from "@/components/course-progress";
 import { getProgress } from "@/actions/get-progress";
 
+// props for the sidebar. looking for the userprogress in each course.chapter array
 interface CourseSidebarProps {
   course: Course & {
-    chapters: Chapter & {
-      userProgress: UserProgress[] | null;
-    };
+    chapters: (Chapter & { userProgress: UserProgress[] | null })[];
   };
   progressCount: number;
 }
@@ -36,6 +35,7 @@ export const CourseSidebar = async ({
       },
     },
   });
+
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r shadow-sm">
       <div className="flex flex-col border-b p-8">
