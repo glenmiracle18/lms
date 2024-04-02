@@ -1,26 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
-import { db } from "@/lib/db";
-import { NextServer } from "next/dist/server/next";
 import Stripe from "stripe";
+import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 
-// stripe from @/lib/stripe
+import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 
-// poset request to trigger the checkout function
 export async function POST(
   req: Request,
   { params }: { params: { courseId: string } },
 ) {
   try {
-    // fetch the user
     const user = await currentUser();
 
     if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
-      return new NextResponse("Unathurized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // fectch the course the user is about to purchase
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
@@ -28,7 +23,6 @@ export async function POST(
       },
     });
 
-    // fetch the purchase
     const purchase = await db.purchase.findUnique({
       where: {
         userId_courseId: {
@@ -39,14 +33,13 @@ export async function POST(
     });
 
     if (purchase) {
-      return new NextResponse("Already Purchased", { status: 400 });
+      return new NextResponse("Already purchased", { status: 400 });
     }
 
     if (!course) {
-      return new NextResponse("Course Not found", { status: 404 });
+      return new NextResponse("Not found", { status: 404 });
     }
 
-    // checkout line items. This will display on the stripe checkout page
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
         quantity: 1,
@@ -61,7 +54,6 @@ export async function POST(
       },
     ];
 
-    // creating a new stripe customer from the db
     let stripeCustomer = await db.stripeCustomer.findUnique({
       where: {
         userId: user.id,
@@ -84,7 +76,6 @@ export async function POST(
       });
     }
 
-    // creating the stipe session
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer.stripeCustomerId,
       line_items,
@@ -97,10 +88,9 @@ export async function POST(
       },
     });
 
-    // returning the session the user
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.log("[COURSE_ID_CHECKOUT]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
