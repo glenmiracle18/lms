@@ -1,23 +1,26 @@
-import React from 'react'
-import { Menu } from 'lucide-react'
+import React from "react";
+import { Menu } from "lucide-react";
 import {
-    Sheet,
-    SheetTrigger,
-    SheetContent
-} from '@/components/ui/sheet'
-import Sidebar from './Sidebar';
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetClose,
+} from "@/components/ui/sheet";
+import Sidebar from "./Sidebar";
 
 const MobileSideBar = () => {
-    return (
-        <Sheet>
-            <SheetTrigger className='md:hidden pr-4 transition hover:opacity-75'>
-                <Menu />
-            </SheetTrigger>
-            <SheetContent side="left" className='p-0 bg-white'>
-                <Sidebar />
-            </SheetContent>
-        </Sheet>
-    )
-}
+  return (
+    <Sheet>
+      <SheetTrigger className="pr-4 transition hover:opacity-75 md:hidden">
+        <Menu />
+      </SheetTrigger>
+      <SheetContent side="left" className="bg-white p-0">
+        <SheetClose asChild>
+          <Sidebar />
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
+  );
+};
 
-export default MobileSideBar
+export default MobileSideBar;

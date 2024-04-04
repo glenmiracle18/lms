@@ -2,6 +2,7 @@
 import React from "react";
 import { BoxesContainer } from "@/components/coming-soon";
 import { twMerge } from "tailwind-merge";
+import { InfinitySpin } from "react-loader-spinner";
 
 const ComingSoon = () => {
   return (
@@ -20,6 +21,9 @@ const ComingSoon = () => {
       <p className="relative z-20 mt-2 text-center text-neutral-300">
         Stary tuned. Our developers are working on this feature!
       </p>
+      <div className="items center flex h-40 w-40 justify-center">
+        <InfinitySpin color="#4fa94d" />
+      </div>
     </div>
   );
 };
