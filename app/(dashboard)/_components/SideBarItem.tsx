@@ -2,7 +2,6 @@
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 interface SideBarItemProps {
   icon: LucideIcon;
@@ -14,7 +13,7 @@ const SideBarItem = ({ icon: Icon, label, href }: SideBarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // active class
+  // active state when clicked
   const isActive =
     (pathname === "/" && href === "/") ||
     pathname === href ||
@@ -44,8 +43,9 @@ const SideBarItem = ({ icon: Icon, label, href }: SideBarItemProps) => {
       </div>
       <div
         className={cn(
-          "ml-auto h-full border-2 border-sky-700 opacity-0 transition-all",
+          "ml-auto h-full border-2 border-sky-700 opacity-0 transition-all duration-0",
           isActive && "opacity-100",
+          !isActive && "opacity-20",
         )}
       ></div>
     </button>
