@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center" id="title">UniCode</h1>
+<p align="center"> The Ulitimate Learning Management System, to purchase industry level tech courses</p>
 
-## Getting Started
-working
-First, run the development server:
+<p align="center"><img src="/screenshots/course_browse_page.png" alt="project-image"></p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<p id="description">This project is an open-source learning management system (LMS) built with Next.js Prisma and Clerk. It aims to provide a platform for free online courses specifically designed for students in Sub-Saharan Africa. The project is focused on using modern web development techniques to deliver a user-friendly and accessible learning experience.</p>
+
+<p align="center"><img src="https://img.shields.io/github/last-commit/glenmiracle18/lms" alt="shields"><img src="https://img.shields.io/github/commit-activity/m/glenmiracle18/lms" alt="shields"><img src="https://img.shields.io/cii/percentage/1" alt="shields"><img src="https://img.shields.io/github/languages/count/glenmiracle18/lms" alt="shields"><img src="https://img.shields.io/github/languages/top/glenmiracle18/lms" alt="shields"><img src="https://img.shields.io/npm/l/prisma" alt="shields"></p>
+
+<h2>🚀 Demo</h2>
+
+[#pending...](#pending...)
+
+<h2>Project Screenshots:</h2>
+
+<img src="/screenshots/dashboard.png" alt="project-screenshot" >
+
+<img src="/screenshots/course-page.png" alt="project-screenshot">
+
+<img src="/screenshots/course_setup.jpeg" alt="project-screenshot">
+
+  
+  
+<h2>🧐 Features</h2>
+
+Here're some of the project's best features:
+
+*   Authentication
+*   Course Progress
+*   Fast Data fetching
+*   Communities
+*   Mentorship
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Star this repository</p>
+
+<p>2. Clone the repo</p>
+
+```
+git clone https://github.com/glenmiracle18/lms
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p>3. copy the dontenv file</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<p>4. run the project locally</p>
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+  
+  
+<h2>💻 Built with</h2>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Technologies used in the project:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+*   Prisma
+*   Zod
+*   ShadcnUI
+*   Typescript
+*   React
+*   NextJs14
+*   SSR
+*   postgres-sql
+*   clerk-auth
+*   mux
+*   uploadthing
+*   docker
+*   aws
 
-## Deploy on Vercel
+<h2>🛡️ License:</h2>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the MIT
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h2>💖Like my work?</h2>
+
+Built by Glen. idea credit (antonio)<p>mailto: m.bonyu@alustudent.com</p>
