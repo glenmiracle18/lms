@@ -18,7 +18,7 @@ const Sidebar = () => {
         <Logo />
         <Link href="/">
           <h1 className="cursor-pointer text-xl font-bold text-emerald-600">
-            UNITECH
+            EDULEARN
           </h1>
         </Link>
       </div>
